@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazamly System</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <div id="notification"></div>
+
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="auth-box">
+            <h1>Nazamly System</h1>
+            <h2>Login to Dashboard</h2>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="adminLogin()">Login</button>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel" style="display:none;">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Nazamly System </h2>
+                <p id="adminInfo"></p>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item" onclick="loadTab('dashboard')" data-tab="dashboard">
+                    <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('admin-announcement')" data-tab="admin-announcement">
+                    <i class="fas fa-bullhorn"></i> <span>Admin Announcement</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('announcement')" data-tab="announcement">
+                    <i class="fas fa-globe"></i> <span>Announcement</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('users')" data-tab="users">
+                    <i class="fas fa-users"></i> <span>Users</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('keys')" data-tab="keys">
+                    <i class="fas fa-key"></i> <span>Keys</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('resellers-manage')" data-tab="resellers-manage">
+                    <i class="fas fa-store"></i> <span>Resellers Manage</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('reseller')" data-tab="reseller">
+                    <i class="fas fa-user-tag"></i> <span>Reseller</span>
+                </button>
+                <button class="nav-item" onclick="loadTab('admin-users')" data-tab="admin-users">
+                    <i class="fas fa-user-shield"></i> <span>Admin Users</span>
+                </button>
+                
+                
+                
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard -->
+            <div id="dashboard" class="tab-content">
+                <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
+                <div class="stats-grid" id="statsGrid"></div>
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div id="recentActivity"></div>
+                </div>
+            </div>
+
+            <!-- Admin Announcement (Main Website - Only Owner & High Admin can edit) -->
+            <div id="admin-announcement" class="tab-content">
+                <h2><i class="fas fa-bullhorn"></i> Admin Announcement</h2>
+                <p class="hint"><i class="fas fa-info-circle"></i> This announcement appears on the MAIN WEBSITE for all users.</p>
+                <div class="announcement-editor" id="adminAnnouncementEditor" style="display:none;">
+                    <h3>Edit Website Announcement</h3>
+                    <textarea id="adminAnnouncementText" rows="4" placeholder="Enter announcement text..."></textarea>
+                    <div class="button-group">
+                        <button onclick="saveAdminAnnouncement()" class="btn-primary">💾 Save to Website</button>
+                        <button onclick="loadAdminAnnouncement()" class="btn-secondary">🔄 Refresh</button>
+                    </div>
+                </div>
+                <div class="announcement-preview">
+                    <h3>Current Website Announcement:</h3>
+                    <div class="announcement-card" id="adminAnnouncementPreview">
+                        <div class="announcement-content" id="adminPreviewContent">Loading...</div>
+                        <div class="announcement-date" id="adminPreviewDate"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcement (For All Admins & Resellers - Read Only for non-owners) -->
+            <div id="announcement" class="tab-content">
+                <h2><i class="fas fa-globe"></i> Announcement</h2>
+                <p class="hint"><i class="fas fa-info-circle"></i> This announcement appears for all admins and resellers .</p>
+                <div class="announcement-editor" id="announcementEditor" style="display:none;">
+                    <h3>Edit Admin Announcement</h3>
+                    <textarea id="announcementText" rows="4" placeholder="Enter announcement text..."></textarea>
+                    <div class="button-group">
+                        <button onclick="saveAnnouncement()" class="btn-primary">💾 Save Announcement</button>
+                        <button onclick="loadAnnouncement()" class="btn-secondary">🔄 Refresh</button>
+                    </div>
+                </div>
+                <div class="announcement-preview">
+                    <h3>Current Announcement:</h3>
+                    <div class="announcement-card" id="announcementPreview">
+                        <div class="announcement-content" id="previewContent">Loading...</div>
+                        <div class="announcement-date" id="previewDate"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users -->
+            <div id="users" class="tab-content">
+                <h2><i class="fas fa-users"></i> Users Management</h2>
+                <div class="search-container">
+                    <input type="text" id="searchUsers" placeholder="🔍 Search users...">
+                </div>
+                <div class="table-wrapper">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Key</th>
+                                <th>passwords</th>
+                                <th>Stream</th>
+                                <th>Branch</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Keys Management with Full Controls -->
+            <div id="keys" class="tab-content">
+                <h2><i class="fas fa-key"></i> Keys Management</h2>
+                <div class="permission-warning" id="keysPermissionWarning" style="display:none;">
+                    <i class="fas fa-exclamation-triangle"></i> You have limited permissions. You can only mark keys as used, unused, or expire them.
+                </div>
+                <div id="keyGenerationSection" style="display:none;">
+                    <div class="generate-section">
+                        <h3>Generate New Keys</h3>
+                        <button onclick="generateKey('1day')">1 Day</button>
+                        <button onclick="generateKey('1week')">1 Week</button>
+                        <button onclick="generateKey('1month')">1 Month</button>
+                        <button onclick="generateKey('3months')">3 Months</button>
+                        <button onclick="generateKey('6months')">6 Months</button>
+                        <button onclick="generateKey('1year')">1 Year</button>
+                        <button onclick="generateKey('lifetime')">Lifetime</button>
+                    </div>
+                    <div id="newKeyDisplay"></div>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="searchKeys" placeholder="🔍 Search keys...">
+                </div>
+                <div class="table-wrapper">
+                    <table id="keysTable">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Status</th>
+                                <th>Duration</th>
+                                <th>Expires At</th>
+                                <th>Created At</th>
+                                <th>Assigned To</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Resellers Manage (Send Keys to Resellers) -->
+            <div id="resellers-manage" class="tab-content">
+                <h2><i class="fas fa-store"></i> Resellers Manage</h2>
+                <div class="resellers-grid">
+                    <div class="resellers-list">
+                        <h3>Resellers List</h3>
+                        <div id="resellersList"></div>
+                    </div>
+                    <div class="assign-keys" id="assignKeysSection">
+                        <h3>Send Keys to Reseller</h3>
+                        <select id="resellerSelectForAssign">
+                            <option value="">Select Reseller</option>
+                        </select>
+                        <div class="duration-selector">
+                            <label>Select Key Duration:</label>
+                            <select id="keyDurationSelect">
+                                <option value="1day">1 Day</option>
+                                <option value="1week">1 Week</option>
+                                <option value="1month">1 Month</option>
+                                <option value="3months">3 Months</option>
+                                <option value="6months">6 Months</option>
+                                <option value="1year">1 Year</option>
+                                <option value="lifetime">Lifetime</option>
+                            </select>
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <input type="number" id="keyQuantity" placeholder="Quantity" min="1" value="1" style="width: 100px;">
+                            <span id="availableKeysCount"></span>
+                        </div>
+                        <button onclick="sendKeysToReseller()" class="btn-primary">Send Keys</button>
+                        <div id="sendMessage" style="margin-top: 10px; font-size: 0.85em;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reseller (View their own keys - Read Only) -->
+            <div id="reseller" class="tab-content">
+                <h2><i class="fas fa-user-tag"></i> My Keys</h2>
+                <div class="announcement-card" id="resellerAnnouncement" style="margin-bottom: 20px;">
+                    <div class="announcement-content" id="resellerAnnouncementContent">Loading announcement...</div>
+                    <div class="announcement-date" id="resellerAnnouncementDate"></div>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterResellerKeys('all')">All Keys</button>
+                    <button class="filter-btn" onclick="filterResellerKeys('used')">Used Keys</button>
+                    <button class="filter-btn" onclick="filterResellerKeys('unused')">Unused Keys</button>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="searchResellerKeys" placeholder="🔍 Search keys...">
+                </div>
+                <div class="table-wrapper">
+                    <table id="resellerKeysTable">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Status</th>
+                                <th>Duration</th>
+                                <th>Expires At</th>
+                                <th>Claimed</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            
+
+            <!-- Admin Users -->
+            <div id="admin-users" class="tab-content">
+                <h2><i class="fas fa-user-shield"></i> Admin Users Management</h2>
+                <div class="create-admin">
+                    <h3>Create New Admin</h3>
+                    <input type="text" id="newAdminUsername" placeholder="Username">
+                    <input type="password" id="newAdminPassword" placeholder="Password">
+                    <select id="newAdminRole">
+                        <option value="high_admin">High Admin</option>
+                        <option value="reseller_manager">Reseller Manager</option>
+                        <option value="reseller">Reseller</option>
+                    </select>
+                    <button onclick="createAdminUser()" class="btn-primary">Create Admin</button>
+                </div>
+                <div class="table-wrapper">
+                    <table id="adminUsersTable">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>password</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

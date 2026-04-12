@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazamy Shop </title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/shop.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <header class="hero">
+            <h1 class="glow-text">⚡ NAZAMY SHOP ⚡</h1>
+            <a href="contact.html">Contact support 📞</a>
+            
+            <div class="cart-header-btn">
+                <button class="cart-icon-btn" onclick="window.location.href='checkout.html'">
+                    
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="cart-count">0</span>
+                </button>
+                
+            </div>
+        </header>
+
+        <div class="products-grid" id="products-container">
+            <div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Loading products...</div>
+        </div>
+    </div>
+
+    <div id="toast-msg" class="toast"></div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/shop.js"></script>
+</body>
+</html>

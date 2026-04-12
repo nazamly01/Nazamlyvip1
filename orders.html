@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop System</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/ordars.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="admin-page">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1><i class="fas fa-crown"></i> Shop System</h1>
+                <button class="back-to-shop-btn" onclick="window.location.href='shop.html'">
+                    <i class="fas fa-store"></i> Back to Shop
+                </button>
+            </div>
+
+            
+
+            <!-- Stats Cards -->
+            <div class="stats-grid" id="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="stat-info">
+                        <h3 id="total-orders">0</h3>
+                        <p>Total Orders</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <div class="stat-info">
+                        <h3 id="total-revenue">$0</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-info">
+                        <h3 id="total-customers">0</h3>
+                        <p>Unique Customers</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <div class="stat-info">
+                        <h3 id="total-products-sold">0</h3>
+                        <p>Products Sold</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="products"><i class="fas fa-box"></i> Products</button>
+                <button class="tab-btn" data-tab="coupons"><i class="fas fa-tag"></i> Coupons</button>
+                <button class="tab-btn" data-tab="orders"><i class="fas fa-shopping-cart"></i> Orders</button>
+                <button class="tab-btn" data-tab="analysis"><i class="fas fa-chart-line"></i> Analysis</button>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2><i class="fas fa-box"></i> Manage Products</h2>
+                    <button class="add-btn" onclick="showAddProductModal()"><i class="fas fa-plus"></i> Add Product</button>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead><tr><th>Icon</th><th>Name</th><th>Price ($)</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="products-table-body"><tr><td colspan="6" class="loading">Loading products...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Coupons Tab -->
+            <div id="coupons-tab" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-tag"></i> Manage Coupons</h2>
+                    <button class="add-btn" onclick="showAddCouponModal()"><i class="fas fa-plus"></i> Add Coupon</button>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead><tr><th>Code</th><th>Discount</th><th>Min Purchase</th><th>Usage Limit</th><th>Used</th><th>Valid Until</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="coupons-table-body"><tr><td colspan="8" class="loading">Loading coupons...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders-tab" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-shopping-cart"></i> Orders</h2>
+                    <div class="search-box">
+                        <input type="text" id="order-search" placeholder="Search by name, email or order #..." onkeyup="filterOrders()">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead><tr><th>Order #</th><th>Customer</th><th>Mobile</th><th>Email</th><th>Products</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                        <tbody id="orders-table-body"><tr><td colspan="10" class="loading">Loading orders...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div id="analysis-tab" class="tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Weekly Analysis</h2>
+                    <div class="date-range">
+                        <select id="week-select" onchange="loadWeeklyAnalysis()" style="background:#111118; border:1px solid #3a2c54; border-radius:40px; padding:10px 20px; color:white;">
+                            <option value="0">This Week</option>
+                            <option value="1">Last Week</option>
+                            <option value="2">2 Weeks Ago</option>
+                            <option value="3">3 Weeks Ago</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <h3><i class="fas fa-chart-line"></i> Weekly Orders</h3>
+                        <div class="value" id="weekly-orders">0</div>
+                        <div id="weekly-orders-trend"></div>
+                    </div>
+                    <div class="analysis-card">
+                        <h3><i class="fas fa-dollar-sign"></i> Weekly Revenue</h3>
+                        <div class="value" id="weekly-revenue">$0</div>
+                        <div id="weekly-revenue-trend"></div>
+                    </div>
+                    <div class="analysis-card">
+                        <h3><i class="fas fa-users"></i> New Customers</h3>
+                        <div class="value" id="weekly-customers">0</div>
+                        <div id="weekly-customers-trend"></div>
+                    </div>
+                    <div class="analysis-card">
+                        <h3><i class="fas fa-box"></i> Avg Order Value</h3>
+                        <div class="value" id="weekly-avg-order">$0</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-bar"></i> Daily Orders (Last 7 Days)</h3>
+                    <canvas id="daily-orders-chart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-chart-line"></i> Revenue Trend</h3>
+                    <canvas id="revenue-trend-chart"></canvas>
+                </div>
+
+                <div class="chart-container">
+                    <h3><i class="fas fa-trophy"></i> Top Products</h3>
+                    <div id="top-products-list" style="padding: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="product-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="product-modal-title">Add Product</h3><span class="close" onclick="closeModal('product-modal')">&times;</span></div>
+        <form id="product-form"><input type="hidden" id="product-id"><div class="form-group"><label>Product Name</label><input type="text" id="product-name" required></div>
+        <div class="form-group"><label>Price ($)</label><input type="number" id="product-price" step="0.01" required></div>
+        <div class="form-group"><label>Stock</label><input type="number" id="product-stock" required></div>
+        <div class="form-group"><label>Icon</label><input type="text" id="product-icon" placeholder="fa-box"></div>
+        <button type="submit" class="submit-btn">Save Product</button></form></div></div>
+
+    <div id="coupon-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3 id="coupon-modal-title">Add Coupon</h3><span class="close" onclick="closeModal('coupon-modal')">&times;</span></div>
+        <form id="coupon-form"><input type="hidden" id="coupon-id"><div class="form-group"><label>Coupon Code</label><input type="text" id="coupon-code" required></div>
+        <div class="form-group"><label>Discount Type</label><select id="coupon-type"><option value="percentage">Percentage (%)</option><option value="fixed">Fixed Amount ($)</option></select></div>
+        <div class="form-group"><label>Discount Value</label><input type="number" id="coupon-value" step="0.01" required></div>
+        <div class="form-group"><label>Min Purchase</label><input type="number" id="coupon-min" step="0.01" value="0"></div>
+        <div class="form-group"><label>Usage Limit</label><input type="number" id="coupon-limit" value="0"></div>
+        <div class="form-group"><label>Valid Until</label><input type="date" id="coupon-valid"></div>
+        <button type="submit" class="submit-btn">Save Coupon</button></form></div></div>
+
+    <div id="order-modal" class="modal"><div class="modal-content modal-large"><div class="modal-header"><h3>Order Details</h3><span class="close" onclick="closeModal('order-modal')">&times;</span></div>
+        <div id="order-details-content"></div></div></div>
+
+    <div id="toast-msg" class="toast"></div>
+    <script src="js/orders.js"></script>
+</body>
+</html>

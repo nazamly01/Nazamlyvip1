@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Nazamly</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/login.js" defer></script>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+
+        <!-- Hero Banner الجديد -->
+        <div class="hero-banner">
+            <img 
+                src="pics/2.png" 
+                alt="Nazamly Cosmic Galaxy Background"
+            >
+           
+        </div>
+
+        <div class="login-card">
+            <div class="card-header">
+                <h2>Login to Your Account</h2>
+                <p>Enter your username and password</p>
+            </div>
+
+            <div id="messageBox" class="message-box" style="display: none;"></div>
+
+            <div id="banMessage" class="ban-message" style="display:none;">
+                <strong>🚫 Your account has been banned.</strong><br>
+                Please contact support: <a href="mailto:Nazamlysupport@gmail.com">Nazamlysupport@gmail.com</a>
+            </div>
+
+            <form id="loginForm" onsubmit="return false;">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Username" 
+                        required 
+                        autofocus
+                    >
+                </div>
+
+                <div class="input-group">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Password" 
+                        required
+                    >
+                </div>
+
+                <button type="button" class="login-btn">Login</button>
+            </form>
+
+       <div class="register-link">
+    Don't have an account? 
+    <a href="register.html">Register here</a>
+    <br>
+    <a href="contact.html">Contact support</a>
+    <br>
+    <a href="shop.html">Nazamly shop 🛒</a>
+</div>
+            
+        </div>
+    </div>
+</body>
+</html>

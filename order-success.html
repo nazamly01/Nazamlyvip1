@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazamly shop </title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/shop.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="success-page">
+        <div class="success-container">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>Order Confirmed! 🎉</h1>
+            <p class="success-message">Your order has been placed successfully</p>
+            
+            <div class="order-info-card">
+                <div class="order-number-section">
+                    <span class="order-label">Order Number</span>
+                    <h2 id="order-number" class="order-number">Loading...</h2>
+                    <button class="copy-btn" onclick="copyOrderNumber()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="customer-info">
+                    <h3><i class="fas fa-user"></i> Customer Information</h3>
+                    <div class="info-row">
+                        <span class="info-label">Name:</span>
+                        <span id="customer-name" class="info-value">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Mobile:</span>
+                        <span id="customer-mobile" class="info-value">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email:</span>
+                        <span id="customer-email" class="info-value">-</span>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="order-details">
+                    <h3><i class="fas fa-box"></i> Order Details</h3>
+                    <div id="order-products-list" class="products-list"></div>
+                    <div class="price-breakdown">
+                        <div class="info-row">
+                            <span class="info-label">Subtotal:</span>
+                            <span id="order-subtotal" class="info-value">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Discount:</span>
+                            <span id="order-discount" class="info-value discount-value">-</span>
+                        </div>
+                        <div class="info-row total-row">
+                            <span class="info-label">Total Paid:</span>
+                            <span id="order-total" class="info-value total-value">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="payment-info">
+                    <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                    <div class="info-row">
+                        <span class="info-label">Method:</span>
+                        <span id="payment-method-display" class="info-value">-</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="window.location.href='shop.html'">
+                    <i class="fas fa-shopping-bag"></i> Continue Shopping
+                </button>
+                <button class="btn-secondary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Receipt
+                </button>
+            </div>
+            
+            <p class="note">
+                <i class="fas fa-envelope"></i> A confirmation email has been sent to your email address.
+            </p>
+        </div>
+    </div>
+    
+    <div id="toast-msg" class="toast"></div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/shop.js"></script>
+</body>
+</html>

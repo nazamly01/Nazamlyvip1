@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Nazamly</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/register.css">
+    
+    <!-- Supabase client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Your Supabase config / client initialization -->
+    <script src="js/supabase-client.js"></script>
+    
+    <!-- Register logic - هنا الملف اللي بنشتغل عليه -->
+    <script src="./js/register.js" defer></script>
+    <!-- لو المسار مش شغال، جرب واحد من دول بداله:
+         <script src="../js/register.js" defer></script>
+         <script src="/js/register.js" defer></script>
+    -->
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <img 
+                src="pics/2.png" 
+                alt="Nazamly Cosmic Galaxy Background"
+            >
+            
+        </div>
+
+        <div class="register-card">
+            <div class="card-header">
+                <h2>Create Account</h2>
+                <p>Enter your username, password and access key</p>
+            </div>
+
+            <div id="messageContainer" style="margin-bottom: 20px; display: none;"></div>
+
+            <!-- الفورم لازم يكون id="registerForm" بالضبط -->
+            <form class="register-form" id="registerForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username" required autofocus>
+                </div>
+
+                <div class="input-group">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Password" 
+                        required 
+                        minlength="6"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="accessKey" placeholder="Access Key" required>
+                </div>
+
+                <div class="input-group radio-group">
+                    <label>Choose your Grade:</label>
+                    <div class="radio-options">
+                        <label><input type="radio" name="stream" value="1 Secandery" required> 1 sec</label>
+                        <label><input type="radio" name="stream" value="2 Secandery"> 2 sec </label>
+                        <label><input type="radio" name="stream" value="3 Secandery" id="thirdSec"> 3 sec</label>
+                    </div>
+                </div>
+
+                <!-- الشعب (تظهر فقط للصف الثالث الثانوي) -->
+                <div class="input-group radio-group" id="branchGroup" style="display: none; margin-top: 15px;">
+                    <label>Choose your Branch:</label>
+                    <div class="radio-options">
+                        <label><input type="radio" name="branch" value="أدبي"> أدبي</label>
+                        <label><input type="radio" name="branch" value="علمي علوم"> علمي علوم</label>
+                        <label><input type="radio" name="branch" value="علمي رياضة"> علمي رياضة</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="register-btn">Register</button>
+            </form>
+
+            <div class="extra-info">
+                <p>Already have an account? <a href="login.html">Login here</a></p>
+                <a href="contact.html">Contact support</a>
+                <br>
+    <a href="shop.html">Nazamly shop 🛒</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- التحكم في إظهار/إخفاء الشعب (كان موجود، خليته زي ما هو) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("HTML inline script: DOM ready - handling branch visibility");
+            
+            const branchGroup = document.getElementById('branchGroup');
+            document.querySelectorAll('input[name="stream"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === '3 Secandery') {
+                        branchGroup.style.display = 'block';
+                    } else {
+                        branchGroup.style.display = 'none';
+                        document.querySelectorAll('input[name="branch"]').forEach(r => r.checked = false);
+                    }
+                });
+            });
+
+            if (!document.querySelector('input[name="stream"]:checked')) {
+                branchGroup.style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- Test log عشان تتأكد إن الصفحة شغالة -->
+    <script>
+        console.log("register.html fully loaded");
+    </script>
+</body>
+</html>

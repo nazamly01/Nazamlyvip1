@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Nazamly Timer</title>
+    <link rel="stylesheet" href="css/timer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Menu Toggle Button -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span>Main</span>
+            <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">×</button>
+        </div>
+        <a href="index.html">Home 🛖</a>
+        <div style="padding:0.8rem 1rem;font-weight:bold;color:var(--accent);border-bottom:1px solid rgba(192,38,211,0.3);margin-bottom:1rem;">Analysis</div>
+        <a href="history.html">History 📜</a>
+        <a href="dashboard.html">Dashboard 📊</a>
+        <div style="padding:1.2rem 1rem 0.6rem;font-weight:bold;color:var(--accent);border-bottom:1px solid rgba(192,38,211,0.15);margin:1.2rem 0 0.6rem;">Quizzes</div>
+        <a href="goals.html">Goals ⚡</a>
+        <a href="weekly_quiz.html">Weekly Quizzes 🎯</a>
+        <a href="monthly_quiz.html">Monthly Quizzes 🎯</a>
+        <div style="padding:1.2rem 1rem 0.6rem;font-weight:bold;color:var(--accent);border-bottom:1px solid rgba(192,38,211,0.15);margin:1.2rem 0 0.6rem;">Smart Tools 🧠</div>
+        <a href="timer.html">Focus Timer ⏱️</a>
+        <a href="Ai.html">AI Assistant 🤖</a>
+        <div style="flex-grow:1;"></div>
+        <a href="contact.html">Contact Us</a>
+        <a href="#" onclick="logout(); return false;" style="margin-top:auto;color:#ff6b6b;font-weight:500;padding:0.9rem 1.2rem;">Logout</a>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Timer App Container -->
+    <div class="app-container">
+        <div class="timer-wrapper">
+
+            <!-- Mode Tabs -->
+            <div class="mode-tabs">
+                <button class="mode-btn active" data-mode="timer">⏱️ Timer</button>
+                <button class="mode-btn" data-mode="countdown">⏲️ Countdown</button>
+                <button class="mode-btn" data-mode="pomodoro">🍅 Pomodoro</button>
+            </div>
+
+            <!-- Current Mode Display -->
+            <div class="mode-indicator" id="modeIndicator">
+                <span class="mode-icon">⏱️</span>
+                <span class="mode-name">Timer</span>
+            </div>
+
+            <!-- Session Intent Display -->
+            <div class="intent-display" id="intentDisplay" style="display:none;"></div>
+
+            <!-- Digital Clock Display -->
+            <div class="digital-clock">
+                <div class="digital-unit">
+                    <div class="digital-card" id="hoursCard">
+                        <span class="digital-digit">00</span>
+                    </div>
+                    <div class="unit-label">HOURS</div>
+                </div>
+                <div class="digital-colon">:</div>
+                <div class="digital-unit">
+                    <div class="digital-card" id="minutesCard">
+                        <span class="digital-digit">00</span>
+                    </div>
+                    <div class="unit-label">MINUTES</div>
+                </div>
+                <div class="digital-colon">:</div>
+                <div class="digital-unit">
+                    <div class="digital-card" id="secondsCard">
+                        <span class="digital-digit">00</span>
+                    </div>
+                    <div class="unit-label">SECONDS</div>
+                </div>
+            </div>
+
+            <!-- Progress Bar (Pomodoro only) -->
+            <div class="progress-container" id="progressContainer" style="display:none;">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Countdown Input Section -->
+            <div class="countdown-input" id="countdownInput" style="display:none;">
+                <input type="number" id="cdHours" placeholder="Hours" min="0" max="99" value="0">
+                <span>:</span>
+                <input type="number" id="cdMinutes" placeholder="Minutes" min="0" max="59" value="5">
+                <span>:</span>
+                <input type="number" id="cdSeconds" placeholder="Seconds" min="0" max="59" value="0">
+                <button id="setCountdownBtn" class="set-btn">Set Timer</button>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="controls">
+                <button id="startBtn" class="control-btn start">▶ Start</button>
+                <button id="pauseBtn" class="control-btn pause">⏸ Pause</button>
+                <button id="resetBtn" class="control-btn reset">🔄 Reset</button>
+            </div>
+
+            <!-- Pomodoro Status -->
+            <div class="pomodoro-status" id="pomodoroStatus" style="display:none;">
+                <span class="session-type" id="sessionType">Focus Session</span>
+                <span class="cycle-count" id="cycleCount">Cycle 1</span>
+            </div>
+
+            <!-- Save Status Indicator -->
+            <div class="save-indicator" id="saveIndicator">💾 Auto-saved</div>
+        </div>
+    </div>
+
+    <script src="js/timer.js"></script>
+</body>
+</html>
