@@ -1,0 +1,77 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazamly Ai</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/ai.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="chat-header">
+            <div class="header-brand">
+                <div class="ai-icon">✦</div>
+                <h1>Nazamly <span style="font-size: 0.7rem; background: rgba(155, 3, 175, 0.3); padding: 2px 8px; border-radius: 20px;">Ai</span></h1>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <a href="index.html" class="back-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Back
+                </a>
+                <button id="clearHistoryBtn" class="clear-btn" aria-label="Clear conversation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    Clear
+                </button>
+            </div>
+        </header>
+
+        <main class="chat-main" id="chatMessagesContainer">
+            <div class="messages-area" id="messagesArea"></div>
+            <div class="scroll-to-bottom-btn" id="scrollToBottomBtn" aria-label="Scroll to bottom">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </div>
+        </main>
+
+        <footer class="input-area">
+            <div class="input-container">
+                <div class="attachment-buttons">
+                    <button id="imageUploadBtn" class="attach-btn" aria-label="Upload image">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="2.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </button>
+                    <button id="fileUploadBtn" class="attach-btn" aria-label="Upload file">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                    </button>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                    <input type="file" id="fileInput" style="display: none;">
+                </div>
+                <textarea id="userInput" rows="1" placeholder="Ask anything... or upload an image/file for analysis"></textarea>
+                <button id="sendBtn" class="send-button" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <div class="input-note">Powered by Nazamly AI | Supports images & files</div>
+        </footer>
+    </div>
+
+    <script src="js/ai.js"></script>
+</body>
+</html>

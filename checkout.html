@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Nazamy Shop</title>
+    <link rel="stylesheet" href="css/shop.css">
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="checkout-page">
+        <div class="checkout-container">
+            <button class="back-btn" onclick="window.location.href='shop.html'">
+                <i class="fas fa-arrow-left"></i> Back to Shop
+            </button>
+            
+            <div class="product-summary">
+                <h2><i class="fas fa-shopping-cart"></i> Your Cart</h2>
+                <div id="cart-items-container"></div>
+                <div class="cart-total">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">0.00</span>
+                </div>
+            </div>
+            
+            <div class="coupon-section">
+                <input type="text" id="coupon-code" class="coupon-input" placeholder="Enter coupon code">
+                <button id="apply-coupon-btn" class="apply-coupon-btn"><i class="fas fa-tag"></i> Apply</button>
+            </div>
+            <div id="discount-info" class="discount-info" style="display: none;"></div>
+            
+            <div class="final-price-row">
+                <span><i class="fas fa-calculator"></i> Final Price:</span>
+                <span id="final-price" class="final-price-amount">0.00</span>
+            </div>
+            
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label><i class="fas fa-user-astronaut"></i> Full Name *</label>
+                    <input type="text" id="name" placeholder="Ahmed Mohamed" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-mobile-alt"></i> Mobile Number *</label>
+                    <input type="tel" id="mobile" placeholder="+20 10 1234 5678" required>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address * The product keys will be sent to this email</label>
+                    <input type="email" id="email" placeholder="ahmed@example.com" required>
+                    <small style="color: #9b87b5;">The product keys will be sent to this email</small>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-credit-card"></i> Payment Method *</label>
+                    <select id="payment-method" required>
+                        <option value="" disabled selected>— Select payment method —</option>
+                        <option value="Instapay">💸 Instapay</option>
+                        <option value="Telda">💳 Telda</option>
+                        <option value="PayPal">🌐 PayPal</option>
+                    </select>
+                </div>
+                
+                <div id="payment-details" class="payment-details" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-image"></i> Payment Screenshot *</label>
+                    <input type="file" id="screenshot" accept="image/png, image/jpeg, image/jpg" required>
+                    <small class="file-hint">Upload proof of payment (JPG/PNG)</small>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-database"></i> PLACE ORDER
+                </button>
+                
+                <div id="form-feedback" class="feedback-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="toast-msg" class="toast"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/shop.js"></script>
+</body>
+</html>

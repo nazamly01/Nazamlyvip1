@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazamly</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/index.js" defer></script>
+</head>
+<body>
+    <div class="announcement-bar" id="announcementBar">
+        Loading announcement...
+    </div>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="header-titles" style="text-align: center; margin-bottom: 2.5rem; color: var(--text);">
+            <div id="usernameDisplay" style="font-size: 1.9rem; font-weight: 600; margin-bottom: 0.4rem;">
+                Welcome
+            </div>
+            <h1 class="logo-text">Nazamly</h1>
+        </div>
+
+        <div id="plannerContent">
+            <div class="navbar">
+                
+                <div class="nav-left">
+                    
+                    <button class="menu-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+                </div>
+                <div class="nav-right">
+                    <!-- No Analysis button here anymore -->
+                </div>
+            </div>
+
+           <div class="sidebar" id="sidebar">
+
+    <!-- مش هنحط Main تاني لأننا في الصفحة الرئيسية -->
+
+    <!-- Analysis مع زر × جنبه -->
+    <div class="sidebar-section-header">
+        <span>Analysis</span>
+        <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">×</button>
+    </div>
+    <a href="history.html">History 📜</a>
+    <a href="dashboard.html">Dashboard 📊</a>
+
+                <div style="padding: 1.2rem 1rem 0.6rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.15); margin: 1.2rem 0 0.6rem;">
+                    Quizzes
+                </div>
+                <a href="goals.html">Goals ⚡</a>
+                <a href="weekly_quiz.html">Weekly Quizzes 🎯</a>
+                <a href="monthly_quiz.html">Monthly Quizzes 🎯</a>
+
+                 <div style="padding: 1.2rem 1rem 0.6rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.15); margin: 1.2rem 0 0.6rem;">
+            Smart Tools 🧠
+        </div>
+        
+        <a href="timer.html">Focus Timer ⏱️</a>
+        <a href="ai.html">AI Undertesting 🔒</a>
+
+                <div style="flex-grow: 1;"></div>
+                <a href="contact.html">contact us</a>
+                <a href="#" onclick="logout(); return false;" style="margin-top: auto; color: #ff6b6b; font-weight: 500; padding: 0.9rem 1.2rem;">
+                    Logout
+                </a>
+            </div>
+
+            <div class="controls">
+                <input type="text" id="taskInput" placeholder="Enter a task">
+                <select id="daySelect">
+                    <option value="Sun">Sunday</option>
+                    <option value="Mon">Monday</option>
+                    <option value="Tue">Tuesday</option>
+                    <option value="Wed">Wednesday</option>
+                    <option value="Thu">Thursday</option>
+                    <option value="Fri">Friday</option>
+                    <option value="Sat">Saturday</option>
+                </select>
+                <input type="date" id="deadlineInput" title="Select deadline date">
+                <select id="deadlineTimeInput">
+                    <option value="">No Time</option>
+                    <option value="Day">Day</option>
+                    <option value="Mid Day">Mid Day</option>
+                    <option value="Night">Night</option>
+                </select>
+                <button onclick="addTask()" class="bg-blue-600">Add Task</button>
+            </div>
+
+            <!-- Week Navigation -->
+            <div class="week-nav">
+                <button class="week-nav-btn" onclick="prevWeek()" title="Previous Week">&#8592; Prev</button>
+                <span class="week-label" id="weekLabel">Week 1</span>
+                <button class="week-nav-btn" onclick="nextWeek()" title="Next Week">Next &#8594;</button>
+            </div>
+
+            <div class="grid" id="weekGrid">
+                <div id="Sun" class="day-section" data-day="Sun">
+                    <h2>Sunday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div id="Mon" class="day-section" data-day="Mon">
+                    <h2>Monday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div id="Tue" class="day-section" data-day="Tue">
+                    <h2>Tuesday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div id="Wed" class="day-section" data-day="Wed">
+                    <h2>Wednesday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div id="Thu" class="day-section" data-day="Thu">
+                    <h2>Thursday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div id="Fri" class="day-section" data-day="Fri">
+                    <h2>Friday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div id="Sat" class="day-section" data-day="Sat">
+                    <h2>Saturday</h2>
+                    <ul class="task-list"></ul>
+                </div>
+            </div>
+
+            <div class="subject-controls">
+                <input type="text" id="subjectInput" placeholder="Enter a subject">
+                <button onclick="addSubject()" class="bg-blue-600">Add Subject</button>
+                <button onclick="deleteSelectedSubjects()" class="bg-red-600">Delete Selected Subjects</button>
+            </div>
+
+            <div class="subjects-section">
+                <h3>Subjects of the week</h3>
+                <ul class="subject-list" id="subjectList"></ul>
+            </div>
+
+            <div class="download-section">
+                <button onclick="downloadPlannerAsPNG()" class="bg-green-600">Download as PNG</button>
+            </div>
+        </div>
+        
+    </div>
+    
+   
+</body>
+</html>

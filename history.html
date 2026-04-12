@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task History - Nazamly</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/history.css">
+
+
+    <!-- Keep your existing scripts if needed -->
+    <script src="js/history.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>   <!-- this should define window.supabaseClient -->
+</head>
+<body>
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcement">
+        Loading announcement...
+    </div>
+
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+    <!-- Add this in history.html -->
+<div id="notification" class="notification hidden">
+    <span id="notification-message"></span>
+</div>
+
+    <div class="container">
+        <!-- Navbar with Menu button (same as weekly) -->
+        <div class="navbar">
+            <div class="nav-left">
+                <button class="menu-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+            </div>
+            <div class="nav-right">
+                <!-- optional future buttons -->
+            </div>
+        </div>
+
+        <div id="historyContent">
+            <div class="header-titles" style="text-align: center; margin-bottom: 2.5rem;">
+              
+                <h1 style="font-size: 2.8rem; margin: 0; line-height: 1;">Task History</h1>
+            </div>
+
+           
+
+            <div class="table-card">
+                <table id="historyTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+                            <th>Creation Date</th>
+                            <th>Task</th>
+                            
+                            
+                            <th>Day</th>
+                            
+                            <th>Deadline</th>
+                            <th class="text-center">Done</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyList"></tbody>
+                </table>
+            </div>
+
+            <button onclick="clearSelectedTasks()" class="mt-4 bg-red-600">Clear Selected Tasks</button>
+        </div>
+    </div>
+
+    <!-- Sidebar – almost identical to weekly_quiz -->
+    <div class="sidebar" id="sidebar">
+
+       <div class="sidebar-header">
+    <span>Main</span>
+    <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">×</button>
+</div>
+        
+        <a href="index.html">Home 🛖</a>
+
+        <div style="padding: 0.8rem 1rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.3); margin-bottom: 1rem;">
+            Analysis
+        </div>
+        
+        <a href="dashboard.html">Dashboard 📊</a>
+
+        <div style="padding: 1.2rem 1rem 0.6rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.15); margin: 1.2rem 0 0.6rem;">
+            Quizzes
+        </div>
+        <a href="goals.html">Goals ⚡</a>
+        <a href="weekly_quiz.html">Weekly Quizzes 🎯</a>
+        <a href="monthly_quiz.html">Monthly Quizzes 🎯</a>
+
+         <div style="padding: 1.2rem 1rem 0.6rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.15); margin: 1.2rem 0 0.6rem;">
+            Smart Tools 🧠
+        </div>
+        
+        <a href="timer.html">Focus Timer ⏱️</a>
+        <a href="Ai.html">AI Assistant 🤖</a>
+
+        <div style="flex-grow: 1;"></div>
+        <a href="contact.html">Contact Us</a>
+        <a href="#" onclick="logout(); return false;" style="margin-top: auto; color: #ff6b6b; font-weight: 500; padding: 0.9rem 1.2rem;">
+            Logout
+        </a>
+    </div>
+    <!-- Overlay لإغلاق الـ sidebar بالكليك بره -->
+
+</body>
+</html>
