@@ -1,0 +1,171 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Quizzes - Nazamly</title>
+    <link rel="icon" type="image/png" href="pics/1.png">
+    <link rel="stylesheet" href="css/weekly_quiz.css">
+
+    <!-- Chart.js & html2canvas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+    <!-- Supabase - MUST be here -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>   <!-- this should define window.supabaseClient -->
+
+    <!-- Your page script last -->
+    <script src="js/weekly_quiz.js" defer></script>
+</head>
+<body>
+    <div class="announcement-bar" id="announcement">
+        Loading announcement...
+    </div>
+
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="header-titles" style="text-align: center; margin-bottom: 2.5rem;">
+            
+            <h1 class="logo-text">Nazamly</h1>
+        </div>
+
+        <div id="quizContent">
+            <!-- Navbar with Menu button -->
+            <div class="navbar">
+                <div class="nav-left">
+                    
+                    <button class="menu-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+                </div>
+                <div class="nav-right">
+                    <!-- You can add more buttons here later if needed -->
+                </div>
+            </div>
+
+            <h1 style="text-align: center;">Weekly Quizzes</h1>
+
+            <div class="controls">
+                <select id="subjectSelect">
+                    <option value="Arabic">Arabic</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Math">Math</option>
+                    <option value="English">English</option>
+                </select>
+                <input type="number" id="scoreInput" placeholder="Your Score" min="0">
+                <input type="number" id="totalInput" placeholder="Total Marks" min="1">
+                <button onclick="addQuiz()" class="bg-blue-600">Add Quiz</button>
+                <button onclick="clearAllData()" class="bg-red-600">Clear All Data</button>
+            </div>
+
+            <div class="grid" id="chartsContainer">
+                <div id="Arabic" class="subject-section">
+                    <h2>Arabic</h2>
+                    <ul id="quizList_Arabic" class="quiz-list"></ul>
+                    <p id="average_Arabic" class="average-display">Average: 0%</p>
+                    <div class="chart-container">
+                        <canvas id="chart_Arabic"></canvas>
+                    </div>
+                </div>
+
+                <div id="Chemistry" class="subject-section">
+                    <h2>Chemistry</h2>
+                    <ul id="quizList_Chemistry" class="quiz-list"></ul>
+                    <p id="average_Chemistry" class="average-display">Average: 0%</p>
+                    <div class="chart-container">
+                        <canvas id="chart_Chemistry"></canvas>
+                    </div>
+                </div>
+
+                <div id="Physics" class="subject-section">
+                    <h2>Physics</h2>
+                    <ul id="quizList_Physics" class="quiz-list"></ul>
+                    <p id="average_Physics" class="average-display">Average: 0%</p>
+                    <div class="chart-container">
+                        <canvas id="chart_Physics"></canvas>
+                    </div>
+                </div>
+
+                <div id="Biology" class="subject-section">
+                    <h2>Biology</h2>
+                    <ul id="quizList_Biology" class="quiz-list"></ul>
+                    <p id="average_Biology" class="average-display">Average: 0%</p>
+                    <div class="chart-container">
+                        <canvas id="chart_Biology"></canvas>
+                    </div>
+                </div>
+
+                <div id="Math" class="subject-section">
+                    <h2>Math</h2>
+                    <ul id="quizList_Math" class="quiz-list"></ul>
+                    <p id="average_Math" class="average-display">Average: 0%</p>
+                    <div class="chart-container">
+                        <canvas id="chart_Math"></canvas>
+                    </div>
+                </div>
+
+                <div id="English" class="subject-section">
+                    <h2>English</h2>
+                    <ul id="quizList_English" class="quiz-list"></ul>
+                    <p id="average_English" class="average-display">Average: 0%</p>
+                    <div class="chart-container">
+                        <canvas id="chart_English"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overall-section">
+                <h2>Overall Performance</h2>
+                <p id="totalAverage" class="average-display">Total Average: 0%</p>
+                <div class="chart-container">
+                    <canvas id="chart_Overall"></canvas>
+                </div>
+                <button onclick="downloadAllCharts()" class="bg-green-600">Download All Charts</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar (same links – you can translate link texts later if desired) -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+                     <span>Main</span>
+    <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">×</button>
+</div>
+        
+        <a href="index.html">Home 🛖</a>
+        
+
+        <div style="padding: 0.8rem 1rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.3); margin-bottom: 1rem;">
+            Analysis
+        </div>      
+        <a href="history.html">History 📜</a>
+        <a href="dashboard.html">Dashboard 📊</a>
+
+        <div style="padding: 1.2rem 1rem 0.6rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.15); margin: 1.2rem 0 0.6rem;">
+            Quizzes
+        </div>
+        
+        <a href="goals.html">Goals ⚡</a>
+        <a href="monthly_quiz.html">Monthly Quizzes 🎯</a>
+
+        <div style="padding: 1.2rem 1rem 0.6rem; font-weight: bold; color: var(--accent); border-bottom: 1px solid rgba(192,38,211,0.15); margin: 1.2rem 0 0.6rem;">
+            Smart Tools 🧠
+        </div>
+        
+        <a href="timer.html">Focus Timer ⏱️</a>
+        <a href="Ai.html">AI Assistant 🤖</a>
+
+
+        <div style="flex-grow: 1;"></div>
+        <a href="contact.html">Contact Us</a>
+        <a href="#" onclick="logout(); return false;" style="margin-top: auto; color: #ff6b6b; font-weight: 500; padding: 0.9rem 1.2rem;">
+            Logout
+        </a>
+    </div>
+    <!-- Overlay لإغلاق الـ sidebar بالكليك بره -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <script src="js/weekly_quiz.js"></script>
+</body>
+</html>
