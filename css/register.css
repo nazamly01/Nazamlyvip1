@@ -1,0 +1,302 @@
+:root {
+    --bg-start: #0f1a12;
+    --bg-end:   #0a0f0a;
+    --card-bg:  #0c120d;
+    --input-bg: #0a0e0b;
+    --border:   #c026d3;
+    --accent:   #d946ef;
+    --accent-dark: #b91cf5;
+    --text:     #ffffff;
+    --text-dim: #d1a8ff;
+    --glow:     rgba(192, 38, 211, 0.28);
+    --glow-strong: rgba(217, 70, 239, 0.42);
+    --star-glow: rgba(233, 150, 255, 0.4);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: radial-gradient(ellipse at bottom, var(--bg-start) 0%, var(--bg-end) 100%);
+    color: var(--text);
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1.2rem; /* صغرنا الـ padding شوية */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 50%;
+    opacity: 0.7;
+    box-shadow: 
+        0 0 4px 1px var(--star-glow),
+        0 0 10px 2px rgba(255,255,255,0.3);
+    animation: twinkle 5s infinite alternate ease-in-out;
+}
+
+@keyframes twinkle {
+    0%   { opacity: 0.4; transform: scale(0.8); }
+    50%  { opacity: 0.9; transform: scale(1.15); }
+    100% { opacity: 0.55; transform: scale(0.95); }
+}
+
+.container {
+    width: 100%;
+    max-width: 380px; /* صغرنا الـ container عشان يبقى أضيق */
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Hero Banner مصغر */
+.hero-banner {
+    position: relative;
+    margin: 0 auto 2rem; /* مسافة أقل تحتها */
+    border-radius: 1.1rem;
+    overflow: hidden;
+    box-shadow: 
+        0 10px 35px rgba(0,0,0,0.6),
+        0 0 30px var(--glow);
+    border: 1.2px solid rgba(192, 38, 211, 0.35);
+    max-width: 360px; /* حد أقصى أصغر */
+}
+
+.hero-banner img {
+    width: 100%;
+    height: 160px; /* الارتفاع الأساسي صغرناه من 220px */
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.78) contrast(1.15) saturate(1.25);
+    transition: transform 0.4s ease;
+}
+
+.hero-banner:hover img {
+    transform: scale(1.04);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 10%, rgba(10,15,10,0.85) 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-title {
+    font-size: 3rem; /* صغرنا النص شوية */
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin: 0;
+    background: linear-gradient(90deg, #e879f9, #c084fc, #a78bfa, #d946ef);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 25px rgba(217,70,239,0.7);
+}
+
+.register-card {
+    background: var(--card-bg);
+    border-radius: 1.1rem;
+    padding: 2rem 1.8rem; /* padding أقل عشان الكارد يصغر */
+    box-shadow: 
+        0 10px 35px rgba(0,0,0,0.65),
+        0 0 28px var(--glow);
+    border: 1.3px solid rgba(192, 38, 211, 0.42);
+    backdrop-filter: blur(8px);
+}
+
+.card-header {
+    margin-bottom: 1.8rem;
+}
+
+.card-header h2 {
+    font-size: 1.65rem; /* صغرنا العنوان */
+    margin: 0 0 0.5rem;
+}
+
+.card-header p {
+    color: var(--text-dim);
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem; /* مسافات داخلية أقل */
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-weight: 500;
+    color: var(--text-dim);
+}
+
+input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.6px solid var(--border);
+    border-radius: 0.65rem;
+    background: var(--input-bg);
+    color: #ffffff;
+    font-size: 0.97rem;
+    transition: all 0.25s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--glow);
+}
+
+.radio-group {
+    margin-top: 0.5rem;
+}
+
+.radio-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.6rem;
+}
+
+.radio-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.radio-options input[type="radio"] {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: var(--accent);
+}
+
+.register-btn {
+    margin-top: 1.1rem;
+    padding: 0.9rem;
+    font-size: 1.02rem;
+    font-weight: 700;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px var(--glow-strong);
+}
+
+.extra-info {
+    margin-top: 1.6rem;
+    color: var(--text-dim);
+    font-size: 0.88rem;
+}
+
+.extra-info a {
+    color: #e879f9;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.extra-info a:hover {
+    text-decoration: underline;
+    color: #f0abfc;
+}
+
+/* Responsive - تصغير أكتر على الموبايل */
+@media (max-width: 480px) {
+    body { padding: 0.8rem; }
+    .container { max-width: 340px; }
+    .hero-banner { margin-bottom: 1.6rem; }
+    .hero-banner img { height: 140px; }
+    .hero-title { font-size: 2.6rem; }
+    .register-card { padding: 1.8rem 1.4rem; }
+    .card-header h2 { font-size: 1.5rem; }
+}
+/* Sidebar Header with Close Button */
+.sidebar-header {
+    position: relative;
+    padding: 0.8rem 1rem;
+    font-weight: bold;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(192,38,211,0.3);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar-header span {
+    flex: 1;
+}
+
+/* Close button styling – بسيط جدًا */
+/* الإعدادات الأساسية للزر */
+.sidebar-close {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.8rem;           /* حجم افتراضي متوسط */
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.4rem 1rem;        /* مساحة داخلية كويسة للضغط */
+    position: absolute;
+    right: 0.3rem;               /* قريب جدًا من الحافة اليمين */
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.75;
+    transition: all 0.2s ease;
+}
+
+/* على الشاشات الكبيرة (كمبيوتر، تابلت كبير) → حجم أصغر */
+@media (min-width: 992px) {
+    .sidebar-close {
+        font-size: 1.9rem;       /* أصغر شوية */
+        padding: 0.3rem 0.8rem;
+        right: -2rem;
+    }
+}
+
+/* على الموبايل والشاشات الصغيرة → حجم أكبر لسهولة الضغط */
+@media (max-width: 991px) {
+    .sidebar-close {
+        font-size: 2.4rem;       /* كبير وواضح */
+        padding: 0.6rem 1.2rem;  /* مساحة أكبر حوالين الرمز */
+        right: -6rem;           /* أقرب للحافة عشان يبان أكتر */
+    }
+}
+
+/* التأثير عند الـ hover أو التركيز */
+.sidebar-close:hover,
+.sidebar-close:focus {
+    opacity: 1;
+    color: var(--accent);
+    transform: translateY(-50%) scale(1.18);
+    text-shadow: 0 0 10px var(--glow);
+}
