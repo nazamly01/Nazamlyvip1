@@ -7,9 +7,9 @@ let finalPrice = 0;
 
 // ========== PAYMENT DETAILS ==========
 const paymentDetails = {
-    Instapay: "💸 Send to Instapay: 0100-1234-5678 (Nazamy Shop)",
-    Telda: "💳 Telda: @nazamyshop / 0100-9876-5432",
-    PayPal: "🌐 PayPal: payments@nazamyshop.com"
+    Instapay: "💸 Send to Instapay: omarnashar1",
+    Telda: "💳 Telda: @omarnashar0",
+    PayPal: "🌐 PayPal: @pmracwasdl7v3vd"
 };
 
 // ========== DISCORD WEBHOOK ==========
